@@ -6,13 +6,13 @@ Solo acepta un maximo de 3 busquedas (vueltas), se puede editar en el #define MA
 
 Ejemplo: 
 
-S->aS
-S->BC
-B->bS
-B->dA
-A->a
-A->b
-C->c
-C->e
+1. S->aS
+2. S->BC
+3. B->bS
+4. B->dA
+5. A->a
+6. A->b
+7. C->c
+8. C->e
 
-cadena a seguir : abdace#
+Cadena a seguir : abdace#
