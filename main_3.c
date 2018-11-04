@@ -33,6 +33,7 @@ void rastreo(char *str, char* pila);
 void programa(void);
 
 int lon=0;
+int nvueltas=0;
 
 struct terminal conjunto[MAX];
 
@@ -155,7 +156,7 @@ char *getterminal(char name, char meta)
 
 
 	//recorre las veces de MAXVUELTAS, 
-	for(contador=0;contador<MAXVUELTAS;contador++)
+	for(contador=0;contador<nvueltas;contador++)
 	{
 		//recorre el arreglo struct 
 		for(i=0;i<lon;i++)
@@ -247,7 +248,7 @@ datos get_rastreo(char* cadena,char* pila)
 	if(identificador(meta)==TRUE)
 	{
 
-		for(contador=0;contador<MAXVUELTAS;contador++)
+		for(contador=0;contador<nvueltas;contador++)
 		{
 			for(i=0;i<lon;i++)
 			{
@@ -381,8 +382,10 @@ void programa(void)
 	char cadena[MAXSTRING];
 	char continuar;
 	char n;
+	char v;
+
 	printf("Ingrese cantidad : ");
-	scanf("%c", &n);
+	scanf(" %c", &n);
 	if(isdigit(n))
 	{
 		lon=atoi(&n);
@@ -392,6 +395,20 @@ void programa(void)
 		printf("Ha ingresado un numero invalido, se usara por defecto el numero 8\n");
 		lon=DEFAULT;
 	}
+
+	printf("Ingrese cantidad de vueltas: ");
+	scanf(" %c", &v);
+	if(isdigit(v))
+	{
+		nvueltas=atoi(&v);
+	}
+	else
+	{
+		printf("Ha ingresado un numero invalido, se usara por defecto el numero 4\n");
+		lon=DEFAULT;
+	}
+
+
 	printf("\n");
 	//recoger datos
 	get_datos();
