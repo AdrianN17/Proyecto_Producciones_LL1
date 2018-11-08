@@ -42,6 +42,8 @@ Ejemplo: SABC
 
 Ejemplo: abcde
 
+* Cadena a rastrear, un maximo de 20 caracteres, debe colocarse con # al final de manera obligatoria
+
 ## Lista de funciones, estructuras y variables utilizadas
 
 ### Variables globales utilizadas
@@ -129,6 +131,15 @@ Ejemplo: abcde
 
 * Gramatica es un tipo de dato, compuesto por un nombre (S) , una cadena (a) y una longitud de termina(1)
 * datos es un tipo de datos, compuesto por una cadena, pila y produccion de tipo puntero.
+
+Cadena : La cadena a hacer seguimiento, debe tener # al final
+	
+Por ejemplo abdace#
+
+Pila : Es la descomposicion de un terminal, hasta acercarse a la cadena
+
+Produccion : Son las producciones utilizadas en la pila
+
 
 ### Funciones
 ```c
