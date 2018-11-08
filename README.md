@@ -321,7 +321,7 @@ Explicacion: Engloba varios conjuntos primero, si cumple las condicionales:
 Si A es mayuscula entonces va a la funcion busqueda_primero con el parametro nombre, sino imprine el valor por consola
 
 ```c
-	void get_tabla(void)
+void get_tabla(void)
 {
 	int i;
 	int j;
@@ -488,7 +488,7 @@ Si name es minuscula y es igual a meta ( a y a==a) entonces retorna E_C
 
 Ahora entra a un for, en el cual este valida si pertenece al array gramatica, si no existe en los no terminales entonces validador es TRUE y se sale del programa retornando 0
 
-Ejemplo: ingreso S->a A->b pero yo busco E,a, pero e no existe en mi gramatica, en este caso retorno 0
+Ejemplo: ingreso S->a A->b pero yo busco getterminal(E,a) pero e no existe en mi gramatica, en este caso retorno 0
 
 Si el programa continua hasta este momento ingresa a un iterador de numero de vueltas (nvueltas)
 Luego en otro de i 
@@ -631,7 +631,19 @@ datos get_rastreo(char* cadena,char* pila)
 }
 ```
 
-Explicacion:
+Explicacion: Se recibe por parametros una cadena y una pila, se inicializa las variables, la meta es el primer caracter de la pila
+se inicializa valor y encontrado, si se cumple las siguientes condiciones
+La funcion devuelve una estructura datos de nombre da
+
+Si la meta es mayuscula, es A entones ingresa al bucle
+	Hace un for por nvueltas y otro por i
+	Si cumple la condicion, S == S y a== a y a es minuscula entonces devuelve el valor, la segunda condicional (contador==0) es solo para devolver el valor correctamente
+		retorna da
+	Pero por el contrario si S == S y A es mayuscula, A se almacena en encontrado, se guarda en valor el i y encontrado se le asigna el valor del primer caracter de termina (A pasaria a ser la busqueda en vez de S, cuando termine el bucle i)
+
+Si por el contrario es minuscula se elimina la primera letra de la cadena y pila y retorno una estructura da
+
+Si no se retorno hasta el momento, se devuelve da, con caracteres 0
 
 
 ```c
