@@ -21,4 +21,22 @@ Hecho para fines academicos.
 
 Explicacion del programa:
 
+## Variables globales utilizadas
+
+
+## Estructuras utilizadas
+
+
+
 ## Funciones utilizadas
+
+* identificador
+* busqueda_primero
+* conjunto_primero
+* get_datos
+* getterminal
+* get_tabla(void)
+* get_rastreo
+* rastreo
+* programa
+* restart--sin usar todavia
