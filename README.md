@@ -49,3 +49,12 @@ Hecho para fines academicos.
 ## Explicacion del codigo
 
 ### Variables globales
+
+```c
+  int lon=0;
+  int nvueltas=0;
+  char *noterminales;
+  char *terminales;
+  int ntlen=0;
+  int tlen=0;
+```
