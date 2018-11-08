@@ -18,3 +18,7 @@ Ejemplo:
 Cadena a seguir : abdace#
 
 Hecho para fines academicos.
+
+Explicacion del programa:
+
+##Funciones utilizadas##
