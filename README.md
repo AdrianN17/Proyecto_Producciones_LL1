@@ -17,6 +17,31 @@ Cadena a seguir : abdace#
 
 > Hecho para fines academicos.
 
+### Instrucciones
+
+Compilar el programa con GCC
+
+Dentro del programa le pedira 4 parametros
+
+* Cantidad de no terminales a utilizar en el programa, si se coloca un numero mayor a 20 este asignara por defecto 8
+* Cantidad de vueltas a utilizar en el programa, si se coloca un numero mayor a 8 este se asigrana por defecto 4
+
+Es necesario colocar la cantidad de vueltas exactas, sino el programa no funcionara de manera optima
+
+Por ejemplo
+
+S->As  A->b
+
+Si coloco 3 vueltas, este hara una vuelta adicional y el resultado puede ser incorrecto, por lo tanto es recomendable colocar el maximo de vueltas que se requiere, en este caso solo 2
+
+* Lista de no terminales para la tabla, un maximo de 20 no terminales, debe colocarse para construir la tabla
+
+Ejemplo: SABC
+
+* Lista de terminales para la tabla, un maximo de 20 no terminales, debe colocarse para construir la tabla
+
+Ejemplo: abcde
+
 ## Lista de funciones, estructuras y variables utilizadas
 
 ### Variables globales utilizadas
