@@ -17,7 +17,7 @@ Cadena a seguir : abdace#
 
 Hecho para fines academicos.
 
-## Explicacion del programa:
+## Lista de funciones, estructuras y variables utilizadas
 
 ### Variables globales utilizadas
 * MAX 
@@ -52,7 +52,7 @@ Hecho para fines academicos.
 * programa
 * restart--sin usar todavia
 
-## Lista de funciones, estructuras y variables utilizadas
+## Explicacion del codigo :
 
 ### Variables globales
 
