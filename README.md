@@ -90,7 +90,7 @@ Hecho para fines academicos.
 ```c
   struct gramatica {
     char nombre[1];
-    char termina[MAXSTRING];
+    char cadena[MAXSTRING];
     int len;
   };
 
@@ -102,7 +102,7 @@ Hecho para fines academicos.
   
 ```
 
-* Gramatica es un tipo de dato, compuesto por un nombre (S) , un termina o cadena (a) y una longitud de termina(1)
+* Gramatica es un tipo de dato, compuesto por un nombre (S) , una cadena (a) y una longitud de termina(1)
 * datos es un tipo de datos, compuesto por una cadena, pila y produccion de tipo puntero.
 
 ### Funciones
