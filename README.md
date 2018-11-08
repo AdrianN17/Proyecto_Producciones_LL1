@@ -139,7 +139,7 @@ Cadena a seguir : abdace#
 	return 0;
 }
 ```
-Explicacion: La funcion inicial por defecto, esta va a programa, y al terminar dicha funcion va a un getch (para pausar el programa), si este es presionado se sale del programa
+**Explicacion:** La funcion inicial por defecto, esta va a programa, y al terminar dicha funcion va a un getch (para pausar el programa), si este es presionado se sale del programa
 
 ```c
   void programa(void)
@@ -202,7 +202,7 @@ Explicacion: La funcion inicial por defecto, esta va a programa, y al terminar d
 }
 ```
 
-Explicacion: La funcion inicializa las variables y pide la cantidad para lon, nvueltas, ademas de la cantidad de terminales y caracteres para usar en la creacion de la tabla
+**Explicacion:** La funcion inicializa las variables y pide la cantidad para lon, nvueltas, ademas de la cantidad de terminales y caracteres para usar en la creacion de la tabla
 Luego va a las demas funciones para realizar el seguimiento respectivo
 
 ```c
@@ -236,7 +236,7 @@ void get_datos(void)
 
 ```
 
-Explicacion: La funcion hace un iterador para llenar los datos en el array gramatica, con lon veces, para posteriormente imprimirlo por consola
+**Explicacion:** La funcion hace un iterador para llenar los datos en el array gramatica, con lon veces, para posteriormente imprimirlo por consola
 
 ```c
 int identificador(char letra)
@@ -251,7 +251,7 @@ int identificador(char letra)
 	}
 }
 ```
-Explicacion: Se encarga de analizar si un caracter es mayuscula o minuscula
+**Explicacion:** Se encarga de analizar si un caracter es mayuscula o minuscula
 
 ```c
 int busqueda_primero(char letra)
@@ -284,7 +284,7 @@ int busqueda_primero(char letra)
 }
 ```
 
-Explicacion: La funcion inicializa las variables, busqueda es el caracter actualmente buscado por el programa, encontrado es un posible candidato que debe esperar hasta el final del bucle de i, si cumple las codicionales:
+**Explicacion:** La funcion inicializa las variables, busqueda es el caracter actualmente buscado por el programa, encontrado es un posible candidato que debe esperar hasta el final del bucle de i, si cumple las codicionales:
 
 	Si el nombre (S) == busqueda(S) y a es minuscula entonces imprime por consola
 
@@ -317,7 +317,7 @@ void conjunto_primero(void)
 	printf("\n");
 }
 ```
-Explicacion: Engloba varios conjuntos primero en un ciclo for de i, si cumple las condicionales:
+**Explicacion:** Engloba varios conjuntos primero en un ciclo for de i, si cumple las condicionales:
 Si A es mayuscula entonces va a la funcion busqueda_primero con el parametro nombre, sino imprine el valor por consola
 
 ```c
@@ -390,7 +390,7 @@ void get_tabla(void)
 }
 ```
 
-Explicacion: Genera una tabla mediante iteradores, llamando multiples veces a la funcion getterminal y dando como parametros el caracter de la fila y columna
+**Explicacion:** Genera una tabla mediante iteradores, llamando multiples veces a la funcion getterminal y dando como parametros el caracter de la fila y columna
 
 ```c
 char *getterminal(char name, char meta)
@@ -480,7 +480,7 @@ char *getterminal(char name, char meta)
 }
 ```
 
-Explicacion: Se recibe por parametro name y meta,se inicializan las variables, tal como busqueda primero, utiliza una variable encontrado y una name_terminal que sera editable a traves del tiempo (inicialmente name_terminal=name), un integer valor y un validador que esta en false
+**Explicacion:** Se recibe por parametro name y meta,se inicializan las variables, tal como busqueda primero, utiliza una variable encontrado y una name_terminal que sera editable a traves del tiempo (inicialmente name_terminal=name), un integer valor y un validador que esta en false
 
 Si se cumplen las siguientes condicional:
 
@@ -634,7 +634,7 @@ datos get_rastreo(char* cadena,char* pila)
 }
 ```
 
-Explicacion: Se recibe por parametros una cadena y una pila, se inicializa las variables, la meta es el primer caracter de la pila
+**Explicacion:** Se recibe por parametros una cadena y una pila, se inicializa las variables, la meta es el primer caracter de la pila
 se inicializa valor y encontrado, si se cumple las siguientes condiciones
 La funcion devuelve una estructura datos de nombre da
 
@@ -671,4 +671,4 @@ void rastreo(char *str, char* pila)
 }
 ```
 
-Explicacion: Es una funcion recursiva que se llama varias veces, si el primer caracter de str es # el programa finaliza, si por el contrario es 0 significa que hay un error, sino cumple ningunas imprime el valor de da, que recoge de la funcion get_rastreo, dando como parametro str y pila, los imprime por consola y vuelve a llamarse a si mismo, pero con los parametros de da.cadena y da.pila
+**Explicacion:** Es una funcion recursiva que se llama varias veces, si el primer caracter de str es # el programa finaliza, si por el contrario es 0 significa que hay un error, sino cumple ningunas imprime el valor de da, que recoge de la funcion get_rastreo, dando como parametro str y pila, los imprime por consola y vuelve a llamarse a si mismo, pero con los parametros de da.cadena y da.pila
