@@ -71,4 +71,49 @@ Hecho para fines academicos.
   char *terminales;
   int ntlen=0;
   int tlen=0;
+  struct gramatica conjunto[MAX];
+```
+
+* MAX es el numero maximo de un array
+* MAXSTRING es el numero maximo de un string
+* MAXVUELTAS es el numero maximo de vueltas
+* TRUE y FALSE son booleanos creados para mayor facilidad
+* DEFAULT es un valor por defecto
+
+* lon es la longitud del array de gramatica definida por el usuario
+* nvueltas es la cantidad de vueltas en el programa definida por el usuario
+* terminales y noterminales son una lista definida por el usuario  de mayusculas y minusculas que se utiliza en la tabla
+* ntlen y tlen es la longitud de las anteriores
+* conjunto es el array de longitud MAX donde se almacena los no terminales y cadenas
+
+### Estructuras 
+```c
+  struct gramatica {
+    char nombre[1];
+    char termina[MAXSTRING];
+    int len;
+  };
+
+  typedef struct datos{
+    char *cadena;
+    char *pila;
+    char *produccion;
+  } datos;
+  
+```
+
+* Gramatica es un tipo de dato, compuesto por un nombre (S) , un termina o cadena (a) y una longitud de termina(1)
+* datos es un tipo de datos, compuesto por una cadena, pila y produccion de tipo puntero.
+
+### Funciones
+```c
+  int identificador(char letra);
+  int busqueda_primero(char letra);
+  void conjunto_primero(void);
+  void get_datos(void);
+  char *getterminal(char name, char meta);
+  void get_tabla(void);datos get_rastreo(char* cadena,char* pila);
+  void rastreo(char *str, char* pila);
+  void programa(void);
+  void restart(void);
 ```
