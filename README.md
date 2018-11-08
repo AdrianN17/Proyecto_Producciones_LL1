@@ -322,3 +322,318 @@ void conjunto_primero(void)
 Explicacion: Engloba varios conjuntos primero, si cumple las condicionales:
 Si A es mayuscula entonces va a la funcion busqueda_primero con el parametro nombre, sino imprine el valor por consola
 
+```c
+	void get_tabla(void)
+{
+	int i;
+	int j;
+	char nt;
+	char t;
+
+
+	printf("\nTabla de la funcion accion\n");
+
+	//cabecera
+	for(j=0;j<tlen;j++)
+	{
+		printf("\t%c",terminales[j]);	
+	}
+	printf("\t#\n");
+
+	//cuerpo
+		// para los noterminales
+	for(i=0;i<ntlen;i++)//filas -
+	{
+		for(j=0;j<tlen+1;j++)
+		{
+			if(j==0)
+			{
+				printf("%c", noterminales[i]);
+			}
+			else
+			{
+				printf("\t%s", getterminal(noterminales[i],terminales[j-1]));
+			}
+		}
+
+		printf("\t0\n");
+	}
+
+		//para los termonales
+	for(i=0;i<tlen;i++)//filas -
+	{
+		for(j=0;j<tlen+1;j++)
+		{
+			if(j==0)
+			{
+				printf("%c", terminales[i]);
+			}
+			else
+			{
+				printf("\t%s", getterminal(terminales[i],terminales[j-1]));
+			}
+		}
+
+		printf("\t0\n");
+	}
+	//#
+	for(j=0;j<tlen+1;j++)
+	{
+		if(j==0)
+		{
+			printf("#");	
+		}
+		else
+		{
+			printf("\t0");
+		}
+	}
+	printf("\tACEPTAR\n");
+}
+```
+
+Explicacion: Genera una tabla mediante iteradores, llamando multiples veces a la funcion getterminal y dando como parametros el caracter de la fila y columna
+
+```c
+char *getterminal(char name, char meta)
+{
+	char *value=malloc(MAXSTRING);
+
+	int i;
+	int j;
+	int k;
+	int contador;
+	char encontrado;
+	char name_terminal=name;
+
+	int valor;
+
+	int validador=FALSE;
+
+	//si ambos son iguales y minusculas
+	if(identificador(name)==FALSE && name==meta)
+	{
+		return "E_C";
+	}
+
+
+	//validar si pertenece en la gramatica
+	for(i=0;i<lon;i++)
+	{
+		if(conjunto[i].nombre[0]==name)
+		{
+			validador=TRUE;
+		}
+	}
+
+	if(validador==FALSE)
+	{
+		return "0";
+	}
+
+
+	//recorre las veces de MAXVUELTAS, 
+	for(contador=0;contador<nvueltas;contador++)
+	{
+		//recorre el arreglo struct 
+		for(i=0;i<lon;i++)
+		{
+			if(conjunto[i].nombre[0]==name_terminal && conjunto[i].termina[0]==meta && identificador(conjunto[i].termina[0])==FALSE)
+			{
+				//revuelve el valor
+				if(contador==0)
+				{
+					valor=i;
+				}
+
+				value[0]= '(' ; 
+				value[1]=  conjunto[valor].nombre[0];
+				value[2]= '-';
+				value[3]= '>';
+
+
+					
+				for(k=0;k<conjunto[valor].len;k++)
+				{
+					value[4+k]=conjunto[valor].termina[k];
+				}
+
+				value[conjunto[valor].len+4]= ')' ;
+				value[conjunto[valor].len+4+1]='\0';
+				
+				return value;
+			}
+			else if(conjunto[i].nombre[0]==name_terminal && identificador(conjunto[i].termina[0])==TRUE)
+			{
+				//si coincide pero es mayuscula lo almacena en encontrado
+				if(contador==0)
+				{
+					valor=i;
+				}
+
+				encontrado=conjunto[i].termina[0];
+			}
+
+		}
+		//encontrado pasaria a ser la nueva busqueda : S->Ab   ... primero busca S, encontro A, ahora busca como A
+		name_terminal=encontrado;
+	}
+	return "0";
+}
+```
+
+Explicacion: 
+
+```c
+datos get_rastreo(char* cadena,char* pila)
+{
+	char meta=pila[0];
+	datos da;
+	int i;
+	int j;
+	int k;
+	int x;
+
+	int contador;
+	int valor=0;
+	char encontrado;
+
+
+	if(identificador(meta)==TRUE)
+	{
+
+		for(contador=0;contador<nvueltas;contador++)
+		{
+			for(i=0;i<lon;i++)
+			{
+				// si S == S y a== a y a es minuscula
+				if(conjunto[i].nombre[0]==meta && conjunto[i].termina[0]==cadena[0] && identificador(conjunto[i].termina[0])==FALSE)
+				{
+					if(contador==0)
+					{
+						valor=i;
+					}
+
+					//produccion
+					da.produccion=malloc(MAXSTRING);
+					da.produccion[0]= '(' ; 
+					da.produccion[1]=  conjunto[valor].nombre[0];
+					da.produccion[2]= '-';
+					da.produccion[3]= '>';
+
+
+					for(k=0;k<conjunto[valor].len;k++)
+					{
+						da.produccion[4+k]=conjunto[valor].termina[k];
+					}
+
+					da.produccion[conjunto[valor].len+4]= ')' ;
+					da.produccion[conjunto[valor].len+4+1]='\0';
+					
+
+					//cadena
+
+					da.cadena=malloc(MAXSTRING);
+					da.cadena=cadena;
+
+					//pila
+
+					da.pila=malloc(MAXSTRING);
+					
+					for(j=0;j<conjunto[valor].len;j++)
+					{
+						da.pila[j]=conjunto[valor].termina[j];
+					}
+
+					for(j=0;j<strlen(pila);j++)
+					{
+						da.pila[j+conjunto[valor].len]=pila[j+1];
+					}
+
+					da.pila[strlen(cadena)+conjunto[valor].len-1]='\0';
+
+
+
+
+					return da;
+				}
+				else if(conjunto[i].nombre[0]==meta && identificador(conjunto[i].termina[0])==TRUE)
+				{
+					//si coincide pero es mayuscula lo almacena en encontrado
+					if(contador==0)
+					{
+						valor=i;
+					}
+
+					encontrado=conjunto[i].termina[0];
+				}
+			}
+
+			meta=encontrado;
+		}
+	}
+	else if(identificador(meta)==FALSE)
+	{
+		//si la pila es minuscula, quita la primera letra de la cadena y pila
+		//completo
+		da.produccion=malloc(MAXSTRING);
+		da.produccion="E_C";
+		//pila
+		da.pila=malloc(MAXSTRING);
+		
+		for(j=0;j<strlen(pila);j++)
+		{
+			da.pila[j]=pila[j+1];
+		}
+
+		da.pila[strlen(pila)]='\0';
+		
+		//cadena
+		da.cadena=malloc(MAXSTRING);
+
+		for(j=0;j<strlen(cadena);j++)
+		{
+			da.cadena[j]=cadena[j+1];
+		}
+
+		da.pila[strlen(cadena)]='\0';
+		
+		return da;
+	}
+
+	da.produccion=malloc(MAXSTRING);
+	da.pila=malloc(MAXSTRING);
+	da.cadena=malloc(MAXSTRING);
+
+	da.produccion="0";
+	da.pila="0";
+	da.cadena="0";
+
+	return da;
+}
+```
+
+Explicacion:
+
+
+```c
+void rastreo(char *str, char* pila)
+{
+	if(str[0]=='#')
+	{
+		printf("#\t\t\t#\tE_C -> ACEPTAR\n");
+	}
+	else if(str[0]=='0')
+	{
+		printf("ERROR\t\t\tERROR\tERROR\n");
+	}
+	else
+	{
+		datos da= get_rastreo(str,pila);
+		printf("%s\t\t\t%s\t%s\n",da.cadena,da.pila,da.produccion);
+		rastreo(da.cadena,da.pila);
+	}	
+}
+```
+
+Explicacion: Es una funcion recursiva que se llama varias veces, si el primer caracter de str es # el programa finaliza, si por el contrario es 0 significa que hay un error, sino cumple ningunas imprime el valor de da, que recoge de la funcion get_rastreo, dando como parametro str y pila, los imprime por consola y vuelve a llamarse a si mismo, pero con los parametros de da.cadena y da.pila
