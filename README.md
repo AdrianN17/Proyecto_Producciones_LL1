@@ -22,11 +22,16 @@ Hecho para fines academicos.
 Explicacion del programa:
 
 ## Variables globales utilizadas
-
+* lon
+* nvueltas
+* noterminales
+* terminales
+* ntlen
+* tle
 
 ## Estructuras utilizadas
-
-
+* gramatica
+* datos
 
 ## Funciones utilizadas
 
