@@ -316,7 +316,7 @@ void conjunto_primero(void)
 	printf("\n");
 }
 ```
-Explicacion: Engloba varios conjuntos primero, si cumple las condicionales:
+Explicacion: Engloba varios conjuntos primero en un ciclo for de i, si cumple las condicionales:
 Si A es mayuscula entonces va a la funcion busqueda_primero con el parametro nombre, sino imprine el valor por consola
 
 ```c
