@@ -141,7 +141,7 @@ Hecho para fines academicos.
 	return 0;
 }
 ```
-Explicacion: la funcion inicial por defecto, esta va a programa, y al terminar dicha funcion va a un getch (para pausar el programa), si este es presionado se sale del programa
+Explicacion: La funcion inicial por defecto, esta va a programa, y al terminar dicha funcion va a un getch (para pausar el programa), si este es presionado se sale del programa
 
 ```c
   void programa(void)
@@ -204,7 +204,7 @@ Explicacion: la funcion inicial por defecto, esta va a programa, y al terminar d
 }
 ```
 
-La funcion inicializa las variables y pide la cantidad para lon, nvueltas, ademas de la cantidad de terminales y caracteres para usar en la creacion de la tabla
+Explicacion: La funcion inicializa las variables y pide la cantidad para lon, nvueltas, ademas de la cantidad de terminales y caracteres para usar en la creacion de la tabla
 Luego va a las demas funciones para realizar el seguimiento respectivo
 
 ```c
@@ -237,3 +237,88 @@ void get_datos(void)
 }
 
 ```
+
+Explicacion: La funcion hace un iterador para llenar los datos en el array gramatica, con lon veces, para posteriormente imprimirlo por consola
+
+```c
+int identificador(char letra)
+{
+	if(letra >='A' && letra<='Z')
+	{
+		return TRUE;
+	}
+	else
+	{
+		return FALSE;
+	}
+}
+```
+Explicacion: Se encarga de analizar si un caracter es mayuscula o minuscula
+
+```c
+int busqueda_primero(char letra)
+{
+	int contador;
+	int i;
+	char busqueda=letra;
+	char encontrado;
+
+	for(contador=0;contador<nvueltas;contador++)
+	{
+		for(i=0;i<lon;i++)
+		{
+			if(conjunto[i].nombre[0]==busqueda && identificador(conjunto[i].termina[0])==FALSE)
+			{
+				printf("Primero de %c %c \n",letra,conjunto[i].termina[0]);
+				return 0;
+			}
+			else if(conjunto[i].nombre[0]==busqueda && identificador(conjunto[i].termina[0])==TRUE)
+			{
+				encontrado=conjunto[i].termina[0];
+			}
+
+
+		}
+
+		busqueda=encontrado;
+	}
+
+}
+
+```
+
+Explicacion: La funcion inicializa las variables, busqueda es el caracter actualmente buscado por el programa, encontrado es un posible candidato que debe esperar hasta el final del bucle de i, si cumple las codicionales:
+
+Si el nombre (S) == busqueda(S) y a es minuscula entonces imprime por consola
+Si el nombre (S) == busqueda(S) y A es mayuscula entonces almacena el A en encontrado, A pasaria a ser la busqueda, en vez de S
+
+Lo hace la cantidad de n vueltas
+
+```c
+void conjunto_primero(void)
+{
+	int i;
+	int j;
+	int k;
+	printf("Conjunto primero de cada no terminal\n");
+
+	for(i=0;i<lon;i++)
+	{
+		//si S->Ab , A es mayuscula
+		if(identificador(conjunto[i].termina[0])==TRUE)
+		{
+			busqueda_primero(conjunto[i].nombre[0]);
+		}
+		//si A es minuscula
+		else
+		{
+			printf("Primero de %c %c \n",conjunto[i].nombre[0],conjunto[i].termina[0]);
+		}
+	}
+
+	printf("\n");
+}
+```
+Explicacion: Engloba varios conjuntos primero, si cumple las condicionales:
+Si A es mayuscula entonces va a la funcion busqueda_primero con el parametro nombre, sino imprine el valor por consola
+
