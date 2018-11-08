@@ -6,11 +6,11 @@
 #define TRUE 1
 #define FALSE 0
 #define MAXSTRING 20
-#define MAXVUELTAS 4
+#define MAXVUELTAS 8
 #define DEFAULT 8
 
 //creacion de la estructura terminal
-struct terminal {
+struct gramatica {
 	char nombre[1];
 	char termina[MAX];
 	int len;
@@ -25,17 +25,24 @@ typedef struct datos{
 
 //funciones utilizadas en el programa
 int identificador(char letra);
+int busqueda_primero(char letra);
 void conjunto_primero(void);
 void get_datos(void);
 char *getterminal(char name, char meta);
 void get_tabla(void);datos get_rastreo(char* cadena,char* pila);
 void rastreo(char *str, char* pila);
 void programa(void);
-
+void restart(void);
+//variables globales
 int lon=0;
 int nvueltas=0;
+char *noterminales;
+char *terminales;
+int ntlen=0;
+int tlen=0;
 
-struct terminal conjunto[MAX];
+//array de structura, de tipo termina
+struct gramatica conjunto[MAX];
 
 
 
@@ -54,6 +61,35 @@ int identificador(char letra)
 
 //conjunto primero 
 
+int busqueda_primero(char letra)
+{
+	int contador;
+	int i;
+	char busqueda=letra;
+	char encontrado;
+
+	for(contador=0;contador<nvueltas;contador++)
+	{
+		for(i=0;i<lon;i++)
+		{
+			if(conjunto[i].nombre[0]==busqueda && identificador(conjunto[i].termina[0])==FALSE)
+			{
+				printf("Primero de %c %c \n",letra,conjunto[i].termina[0]);
+				return 0;
+			}
+			else if(conjunto[i].nombre[0]==busqueda && identificador(conjunto[i].termina[0])==TRUE)
+			{
+				encontrado=conjunto[i].termina[0];
+			}
+
+			
+		}
+
+		busqueda=encontrado;
+	}
+
+}
+
 
 void conjunto_primero(void)
 {
@@ -67,25 +103,7 @@ void conjunto_primero(void)
 		//si S->Ab , A es mayuscula
 		if(identificador(conjunto[i].termina[0])==TRUE)
 		{
-
-			for(j=0;j<lon;j++)
-			{
-				//si
-				if(conjunto[i].termina[0]==conjunto[j].nombre[0] && identificador(conjunto[j].termina[0])==FALSE)
-				{
-					printf("Primero de %c %c \n",conjunto[i].nombre[0],conjunto[j].termina[0]);
-				}
-				else if(conjunto[i].termina[0]==conjunto[j].nombre[0] && identificador(conjunto[j].termina[0])==TRUE)
-				{
-					for(k=0;k<lon;k++)
-					{
-						if(conjunto[j].termina[0]==conjunto[k].nombre[0] && identificador(conjunto[k].termina[0])==FALSE)
-						{
-							printf("Primero de %c %c \n",conjunto[i].nombre[0],conjunto[k].termina[0]);
-						}
-					}
-				}
-			}
+			busqueda_primero(conjunto[i].nombre[0]);
 		}
 		//si A es minuscula
 		else
@@ -140,6 +158,14 @@ char *getterminal(char name, char meta)
 	int valor;
 
 	int validador=FALSE;
+
+	//si ambos son iguales y minusculas
+	if(identificador(name)==FALSE && name==meta)
+	{
+		return "E_C";
+	}
+
+
 	//validar si pertenece en la gramatica
 	for(i=0;i<lon;i++)
 	{
@@ -174,26 +200,16 @@ char *getterminal(char name, char meta)
 				value[2]= '-';
 				value[3]= '>';
 
-				if(conjunto[valor].len==1)
-				{
-					value[4]=conjunto[valor].termina[0];
-					value[5]=' ';
-					value[6]= ')' ;
-				}
-				else
-				{
+
 					
-					for(k=0;k<conjunto[valor].len;k++)
-					{
-						value[4+k]=conjunto[valor].termina[k];
-					}
-
-					value[conjunto[valor].len+4]= ')' ;
+				for(k=0;k<conjunto[valor].len;k++)
+				{
+					value[4+k]=conjunto[valor].termina[k];
 				}
 
-
+				value[conjunto[valor].len+4]= ')' ;
+				value[conjunto[valor].len+4+1]='\0';
 				
-
 				return value;
 			}
 			else if(conjunto[i].nombre[0]==name_terminal && identificador(conjunto[i].termina[0])==TRUE)
@@ -216,19 +232,70 @@ char *getterminal(char name, char meta)
 
 void get_tabla(void)
 {
-	printf("\nTabla de la funcion accion\n");
-	printf("\ta\tb\tc\td\te\t#\n");
-	printf("S\t%s\t%s\t%s\t%s\t%s\t0\n",getterminal('S','a'),getterminal('S','b'),getterminal('S','c'),getterminal('S','d'),getterminal('S','e'));
-	printf("A\t%s\t%s\t%s\t%s\t%s\t0\n",getterminal('A','a'),getterminal('A','b'),getterminal('A','c'),getterminal('A','d'),getterminal('A','e'));
-	printf("B\t%s\t%s\t%s\t%s\t%s\t0\n",getterminal('B','a'),getterminal('B','b'),getterminal('B','c'),getterminal('B','d'),getterminal('B','e'));
-	printf("C\t%s\t%s\t%s\t%s\t%s\t0\n",getterminal('C','a'),getterminal('C','b'),getterminal('C','c'),getterminal('C','d'),getterminal('C','e'));
+	int i;
+	int j;
+	char nt;
+	char t;
 
-	printf("a\t%s\t%s\t%s\t%s\t%s\t0\n",getterminal('a','a'),getterminal('a','b'),getterminal('a','c'),getterminal('a','d'),getterminal('a','e'));
-	printf("b\t%s\t%s\t%s\t%s\t%s\t0\n",getterminal('b','a'),getterminal('b','b'),getterminal('b','c'),getterminal('b','d'),getterminal('b','e'));
-	printf("c\t%s\t%s\t%s\t%s\t%s\t0\n",getterminal('c','a'),getterminal('c','b'),getterminal('c','c'),getterminal('c','d'),getterminal('c','e'));
-	printf("d\t%s\t%s\t%s\t%s\t%s\t0\n",getterminal('d','a'),getterminal('d','b'),getterminal('d','c'),getterminal('d','d'),getterminal('d','e'));
-	printf("e\t%s\t%s\t%s\t%s\t%s\t0\n",getterminal('e','a'),getterminal('e','b'),getterminal('e','c'),getterminal('e','d'),getterminal('e','e'));
-	printf("#\t0\t0\t0\t0\t0\tACEPTAR\n");
+
+	printf("\nTabla de la funcion accion\n");
+
+	//cabecera
+	for(j=0;j<tlen;j++)
+	{
+		printf("\t%c",terminales[j]);	
+	}
+	printf("\t#\n");
+
+	//cuerpo
+		// para los noterminales
+	for(i=0;i<ntlen;i++)//filas -
+	{
+		for(j=0;j<tlen+1;j++)
+		{
+			if(j==0)
+			{
+				printf("%c", noterminales[i]);
+			}
+			else
+			{
+				printf("\t%s", getterminal(noterminales[i],terminales[j-1]));
+			}
+		}
+
+		printf("\t0\n");
+	}
+
+		//para los termonales
+	for(i=0;i<tlen;i++)//filas -
+	{
+		for(j=0;j<tlen+1;j++)
+		{
+			if(j==0)
+			{
+				printf("%c", terminales[i]);
+			}
+			else
+			{
+				printf("\t%s", getterminal(terminales[i],terminales[j-1]));
+			}
+		}
+
+		printf("\t0\n");
+	}
+	//#
+	for(j=0;j<tlen+1;j++)
+	{
+		if(j==0)
+		{
+			printf("#");	
+		}
+		else
+		{
+			printf("\t0");
+		}
+	}
+	printf("\tACEPTAR\n");
 }
 
 datos get_rastreo(char* cadena,char* pila)
@@ -267,22 +334,15 @@ datos get_rastreo(char* cadena,char* pila)
 					da.produccion[2]= '-';
 					da.produccion[3]= '>';
 
-					if(conjunto[valor].len==1)
-					{
-						da.produccion[4]=conjunto[valor].termina[0];
-						da.produccion[5]=' ';
-						da.produccion[6]= ')' ;
-					}
-					else
-					{
-						
-						for(k=0;k<conjunto[valor].len;k++)
-						{
-							da.produccion[4+k]=conjunto[valor].termina[k];
-						}
 
-						da.produccion[conjunto[valor].len+4]= ')' ;
+					for(k=0;k<conjunto[valor].len;k++)
+					{
+						da.produccion[4+k]=conjunto[valor].termina[k];
 					}
+
+					da.produccion[conjunto[valor].len+4]= ')' ;
+					da.produccion[conjunto[valor].len+4+1]='\0';
+					
 
 					//cadena
 
@@ -302,6 +362,8 @@ datos get_rastreo(char* cadena,char* pila)
 					{
 						da.pila[j+conjunto[valor].len]=pila[j+1];
 					}
+
+					da.pila[strlen(cadena)+conjunto[valor].len-1]='\0';
 
 
 
@@ -336,6 +398,8 @@ datos get_rastreo(char* cadena,char* pila)
 		{
 			da.pila[j]=pila[j+1];
 		}
+
+		da.pila[strlen(pila)]='\0';
 		
 		//cadena
 		da.cadena=malloc(MAXSTRING);
@@ -344,6 +408,8 @@ datos get_rastreo(char* cadena,char* pila)
 		{
 			da.cadena[j]=cadena[j+1];
 		}
+
+		da.pila[strlen(cadena)]='\0';
 		
 		return da;
 	}
@@ -383,6 +449,11 @@ void programa(void)
 	char continuar;
 	char n;
 	char v;
+	noterminales=malloc(MAXSTRING);
+	terminales=malloc(MAXSTRING);
+	char *inicial;
+	inicial=malloc(MAXSTRING);
+
 
 	printf("Ingrese cantidad : ");
 	scanf(" %c", &n);
@@ -408,6 +479,15 @@ void programa(void)
 		lon=DEFAULT;
 	}
 
+	printf("Ingrese la lista de no terminales para la tabla : ");
+	scanf("%s",noterminales);
+	ntlen=strlen(noterminales);
+
+
+	printf("Ingrese la lista de terminales para la tabla : ");
+	scanf("%s",terminales);
+	tlen=strlen(terminales);
+
 
 	printf("\n");
 	//recoger datos
@@ -422,17 +502,33 @@ void programa(void)
 	printf("\n");
 
 	printf("%s\t%s\t%s\n", "La cadena a reconocer", "La pila" ,"producciones usada" );
-	printf("%s\t\t\t%s\t%s\n",cadena,"S#","lambda");
-	rastreo(cadena, "S#");
+	printf("%s\t\t\t%c#\t%s\n",cadena,noterminales[0],"lambda");
+	inicial[0]=noterminales[0];
+	inicial[1]='#';
+	inicial[2]='\0';
+
+	rastreo(cadena, inicial);
 
 	/*printf("\n Presione Y/N para reiniciar o salir? ");
 	scanf(" %c",continuar);
 
 	if(continuar=='y' || continuar=='Y')
 	{
-		programa();
+		//restart();
 	}*/
 }
+
+/*void restart(void)
+{
+	lon=0;
+	nvueltas=0;
+	memset(noterminales, 0, 255);
+	memset(terminales, 0, 255);
+	memset(conjunto
+	ntlen=0;
+	tlen=0;
+	programa();
+}*/
 
 int main()
 {
