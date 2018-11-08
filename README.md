@@ -21,4 +21,4 @@ Hecho para fines academicos.
 
 Explicacion del programa:
 
-##Funciones utilizadas##
+##Funciones utilizadas
