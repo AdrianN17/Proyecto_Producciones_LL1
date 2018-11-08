@@ -287,6 +287,7 @@ int busqueda_primero(char letra)
 Explicacion: La funcion inicializa las variables, busqueda es el caracter actualmente buscado por el programa, encontrado es un posible candidato que debe esperar hasta el final del bucle de i, si cumple las codicionales:
 
 Si el nombre (S) == busqueda(S) y a es minuscula entonces imprime por consola
+
 Si el nombre (S) == busqueda(S) y A es mayuscula entonces almacena el A en encontrado, A pasaria a ser la busqueda, en vez de S
 
 Lo hace la cantidad de n vueltas
@@ -490,8 +491,11 @@ Ahora entra a un for, en el cual este valida si pertenece al array gramatica, si
 Ejemplo: ingreso S->a A->b pero yo busco getterminal(E,a) pero e no existe en mi gramatica, en este caso retorno 0
 
 Si el programa continua hasta este momento ingresa a un iterador de numero de vueltas (nvueltas)
+
 Luego en otro de i 
+
 Y entra a la siguiente condicional:
+
 Si S==S y a==a y a es minuscula entonces devuelve los valores, si contador es 0 entonces se almacena(esto es para lo que viene a continuacion), ya que queremos que por ejemplo:
 	
 Pero si S==S y A es mayuscula, se almacena i en valor, si el contador es 0
@@ -635,8 +639,10 @@ se inicializa valor y encontrado, si se cumple las siguientes condiciones
 La funcion devuelve una estructura datos de nombre da
 
 Si la meta es mayuscula, es A entones ingresa al bucle
+
 	Hace un for por nvueltas y otro por i
 	Si cumple la condicion, S == S y a== a y a es minuscula entonces devuelve el valor, la segunda condicional (contador==0) es solo para devolver el valor correctamente
+	
 		retorna da
 	Pero por el contrario si S == S y A es mayuscula, A se almacena en encontrado, se guarda en valor el i y encontrado se le asigna el valor del primer caracter de termina (A pasaria a ser la busqueda en vez de S, cuando termine el bucle i)
 
