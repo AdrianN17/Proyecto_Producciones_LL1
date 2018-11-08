@@ -52,7 +52,7 @@ Hecho para fines academicos.
 * programa
 * restart--sin usar todavia
 
-## Explicacion del codigo
+## Lista de funciones, estructuras y variables utilizadas
 
 ### Variables globales
 
