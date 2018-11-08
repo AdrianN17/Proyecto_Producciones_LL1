@@ -204,3 +204,36 @@ Explicacion: la funcion inicial por defecto, esta va a programa, y al terminar d
 }
 ```
 
+La funcion inicializa las variables y pide la cantidad para lon, nvueltas, ademas de la cantidad de terminales y caracteres para usar en la creacion de la tabla
+Luego va a las demas funciones para realizar el seguimiento respectivo
+
+```c
+void get_datos(void)
+{
+	int i; 
+
+	for(i=0;i<lon;i++)
+	{
+		//coger nombre
+		printf("Ingrese no terminal %i : ",i+1);
+		scanf(" %c", &conjunto[i].nombre);
+		conjunto[i].nombre[0]=toupper(conjunto[i].nombre[0]);
+
+		//coger cadena
+		printf("Ingrese cadena %i : ",i+1);
+		scanf("%s",conjunto[i].termina);
+
+		//coger tamaño
+		conjunto[i].len=strlen(conjunto[i].termina);
+		printf("\n");	
+	}
+
+	//impresion de gramatica
+	for(i=0;i<lon;i++)
+	{
+		printf(" %c -> %s \n",conjunto[i].nombre[0],conjunto[i].termina);
+	}
+	printf("\n");
+}
+
+```
