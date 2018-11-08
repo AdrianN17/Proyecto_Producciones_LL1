@@ -480,8 +480,28 @@ char *getterminal(char name, char meta)
 }
 ```
 
-Explicacion: 
+Explicacion: Se recibe por parametro name y meta,se inicializan las variables, tal como busqueda primero, utiliza una variable encontrado y una name_terminal que sera editable a traves del tiempo (inicialmente name_terminal=name), un integer valor y un validador que esta en false
 
+Si se cumplen las siguientes condicional:
+
+Si name es minuscula y es igual a meta ( a y a==a) entonces retorna E_C
+
+Ahora entra a un for, en el cual este valida si pertenece al array gramatica, si no existe en los no terminales entonces validador es TRUE y se sale del programa retornando 0
+
+Ejemplo: ingreso S->a A->b pero yo busco E,a, pero e no existe en mi gramatica, en este caso retorno 0
+
+Si el programa continua hasta este momento ingresa a un iterador de numero de vueltas (nvueltas)
+Luego en otro de i 
+Y entra a la siguiente condicional:
+Si S==S y a==a y a es minuscula entonces devuelve los valores, si contador es 0 entonces se almacena(esto es para lo que viene a continuacion), ya que queremos que por ejemplo:
+	
+Pero si S==S y A es mayuscula, se almacena i en valor, si el contador es 0
+	S->As
+	A->b
+	Queremos que devuelva S->As, esta funcion solo valida si tiene un no terminal, esto es lo correcto
+	S->b es incorrecto por eso se almacena i en valor, para no perderlo en el bucle, si fuese el caso que A deriva a otro no terminal B
+	
+Y si fuese el caso que no devuelve ningun valor hasta el momento, se devuelve 0
 ```c
 datos get_rastreo(char* cadena,char* pila)
 {
