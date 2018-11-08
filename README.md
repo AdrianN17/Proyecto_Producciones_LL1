@@ -112,8 +112,25 @@ Hecho para fines academicos.
   void conjunto_primero(void);
   void get_datos(void);
   char *getterminal(char name, char meta);
-  void get_tabla(void);datos get_rastreo(char* cadena,char* pila);
+  void get_tabla(void);
+  datos get_rastreo(char* cadena,char* pila);
+  datos get_rastreo(char* cadena,char* pila);
   void rastreo(char *str, char* pila);
   void programa(void);
   void restart(void);
+```
+* identificador recibe un parametro caracter y valida si es mayuscula o minuscula
+* busqueda_primero recibe un parametro caracter y valida si tiene un terminal
+* conjunto_primero no recibe un parametro, engloba a varias busqueda_primero
+* get_datos recoge los datos por consola
+* getterminal recibe como parametro un nombre (S) y una meta a donde yo quiero llegar (a)
+* get_tabla engloba varios getterminal, armando una tabla con los terminales y no terminales pedidos por consola
+* get_rastreo recibe como parametros una cadena y una pila, devuelve una estructura llamada datos
+* rastreo recibe por parametro un string y una pila
+* programa es la funcion principal, que esta dentro del main
+* restar es la funcion para volver a reiniciar el programa
+
+### Codigo fuente explicacion
+```c
+
 ```
