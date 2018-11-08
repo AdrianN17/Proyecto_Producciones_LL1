@@ -457,7 +457,7 @@ void programa(void)
 	inicial=malloc(MAXSTRING);
 
 
-	printf("Ingrese cantidad : ");
+	printf("Ingrese cantidad de no terminales a utilizar en el programa : ");
 	scanf(" %d", &lon);
 
 	if(lon>MAX)
@@ -476,7 +476,7 @@ void programa(void)
 		lon=DEFAULT;
 	}*/
 
-	printf("Ingrese cantidad de vueltas: ");
+	printf("Ingrese cantidad de vueltas a utilizar en el programa : ");
 	scanf(" %d", &nvueltas);
 	if(nvueltas>MAXVUELTAS)
 	{
