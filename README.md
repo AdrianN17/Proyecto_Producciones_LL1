@@ -28,6 +28,7 @@ Hecho para fines academicos.
 * MAXSTRING 
 * MAXVUELTAS 
 * DEFAULT 
+* DEFAULT2
 
 * lon
 * nvueltas
@@ -64,6 +65,7 @@ Hecho para fines academicos.
   #define MAXSTRING 20
   #define MAXVUELTAS 8
   #define DEFAULT 8
+  #define DEFAULT2 4
 
   int lon=0;
   int nvueltas=0;
@@ -78,7 +80,7 @@ Hecho para fines academicos.
 * MAXSTRING es el numero maximo de un string
 * MAXVUELTAS es el numero maximo de vueltas
 * TRUE y FALSE son booleanos creados para mayor facilidad
-* DEFAULT es un valor por defecto
+* DEFAULT y DEFAULT2 son valores por defecto
 
 * lon es la longitud del array de gramatica definida por el usuario
 * nvueltas es la cantidad de vueltas en el programa definida por el usuario
@@ -132,5 +134,73 @@ Hecho para fines academicos.
 
 ### Codigo fuente explicacion
 ```c
-
+  int main()
+{
+	programa();
+	getch();
+	return 0;
+}
 ```
+Explicacion: la funcion inicial por defecto, esta va a programa, y al terminar dicha funcion va a un getch (para pausar el programa), si este es presionado se sale del programa
+
+```c
+  void programa(void)
+{
+	char cadena[MAXSTRING];
+	char continuar;
+	char n;
+	char v;
+	noterminales=malloc(MAXSTRING);
+	terminales=malloc(MAXSTRING);
+	char *inicial;
+	inicial=malloc(MAXSTRING);
+
+
+	printf("Ingrese cantidad : ");
+	scanf(" %d", &lon);
+
+	if(lon>MAX)
+	{
+		printf("Ha ingresado un numero invalido, se usara por defecto el numero 8\n");
+		lon=DEFAULT;
+	}
+
+	printf("Ingrese cantidad de vueltas: ");
+	scanf(" %d", &nvueltas);
+	if(nvueltas>MAXVUELTAS)
+	{
+		printf("Ha ingresado un numero invalido, se usara por defecto el numero 4\n");
+		nvueltas=DEFAULT2;
+	}
+	printf("Ingrese la lista de no terminales para la tabla : ");
+	scanf("%s",noterminales);
+	ntlen=strlen(noterminales);
+
+
+	printf("Ingrese la lista de terminales para la tabla : ");
+	scanf("%s",terminales);
+	tlen=strlen(terminales);
+
+
+	printf("\n");
+	//recoger datos
+	get_datos();
+	//conjunto primero
+	conjunto_primero();
+	//tabla
+	get_tabla();
+	//cadena
+	printf("\nIngrese cadena a rastrear : ");
+	scanf("%s", cadena);
+	printf("\n");
+
+	printf("%s\t%s\t%s\n", "La cadena a reconocer", "La pila" ,"producciones usada" );
+	printf("%s\t\t\t%c#\t%s\n",cadena,noterminales[0],"lambda");
+	inicial[0]=noterminales[0];
+	inicial[1]='#';
+	inicial[2]='\0';
+
+	rastreo(cadena, inicial);
+}
+```
+
