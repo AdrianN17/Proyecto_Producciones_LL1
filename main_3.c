@@ -8,11 +8,12 @@
 #define MAXSTRING 20
 #define MAXVUELTAS 8
 #define DEFAULT 8
+#define DEFAULT2 4
 
 //creacion de la estructura terminal
 struct gramatica {
 	char nombre[1];
-	char termina[MAX];
+	char termina[MAXSTRING];
 	int len;
 };
 
@@ -30,6 +31,7 @@ void conjunto_primero(void);
 void get_datos(void);
 char *getterminal(char name, char meta);
 void get_tabla(void);datos get_rastreo(char* cadena,char* pila);
+datos get_rastreo(char* cadena,char* pila);
 void rastreo(char *str, char* pila);
 void programa(void);
 void restart(void);
@@ -456,8 +458,15 @@ void programa(void)
 
 
 	printf("Ingrese cantidad : ");
-	scanf(" %c", &n);
-	if(isdigit(n))
+	scanf(" %d", &lon);
+
+	if(lon>MAX)
+	{
+		printf("Ha ingresado un numero invalido, se usara por defecto el numero 8\n");
+		lon=DEFAULT;
+	}
+
+	/*if(isdigit(n))
 	{
 		lon=atoi(&n);
 	}
@@ -465,11 +474,17 @@ void programa(void)
 	{
 		printf("Ha ingresado un numero invalido, se usara por defecto el numero 8\n");
 		lon=DEFAULT;
-	}
+	}*/
 
 	printf("Ingrese cantidad de vueltas: ");
-	scanf(" %c", &v);
-	if(isdigit(v))
+	scanf(" %d", &nvueltas);
+	if(nvueltas>MAXVUELTAS)
+	{
+		printf("Ha ingresado un numero invalido, se usara por defecto el numero 4\n");
+		nvueltas=DEFAULT2;
+	}
+
+	/*if(isdigit(v))
 	{
 		nvueltas=atoi(&v);
 	}
@@ -477,7 +492,7 @@ void programa(void)
 	{
 		printf("Ha ingresado un numero invalido, se usara por defecto el numero 4\n");
 		lon=DEFAULT;
-	}
+	}*/
 
 	printf("Ingrese la lista de no terminales para la tabla : ");
 	scanf("%s",noterminales);
