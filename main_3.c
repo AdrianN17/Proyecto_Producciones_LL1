@@ -13,7 +13,7 @@
 //creacion de la estructura terminal
 struct gramatica {
 	char nombre[1];
-	char termina[MAXSTRING];
+	char cadena[MAXSTRING];
 	int len;
 };
 
@@ -74,14 +74,14 @@ int busqueda_primero(char letra)
 	{
 		for(i=0;i<lon;i++)
 		{
-			if(conjunto[i].nombre[0]==busqueda && identificador(conjunto[i].termina[0])==FALSE)
+			if(conjunto[i].nombre[0]==busqueda && identificador(conjunto[i].cadena[0])==FALSE)
 			{
-				printf("Primero de %c %c \n",letra,conjunto[i].termina[0]);
+				printf("Primero de %c %c \n",letra,conjunto[i].cadena[0]);
 				return 0;
 			}
-			else if(conjunto[i].nombre[0]==busqueda && identificador(conjunto[i].termina[0])==TRUE)
+			else if(conjunto[i].nombre[0]==busqueda && identificador(conjunto[i].cadena[0])==TRUE)
 			{
-				encontrado=conjunto[i].termina[0];
+				encontrado=conjunto[i].cadena[0];
 			}
 
 			
@@ -103,14 +103,14 @@ void conjunto_primero(void)
 	for(i=0;i<lon;i++)
 	{
 		//si S->Ab , A es mayuscula
-		if(identificador(conjunto[i].termina[0])==TRUE)
+		if(identificador(conjunto[i].cadena[0])==TRUE)
 		{
 			busqueda_primero(conjunto[i].nombre[0]);
 		}
 		//si A es minuscula
 		else
 		{
-			printf("Primero de %c %c \n",conjunto[i].nombre[0],conjunto[i].termina[0]);
+			printf("Primero de %c %c \n",conjunto[i].nombre[0],conjunto[i].cadena[0]);
 		}
 	}
 
@@ -131,17 +131,17 @@ void get_datos(void)
 
 		//coger cadena
 		printf("Ingrese cadena %i : ",i+1);
-		scanf("%s",conjunto[i].termina);
+		scanf("%s",conjunto[i].cadena);
 
 		//coger tamaño
-		conjunto[i].len=strlen(conjunto[i].termina);
+		conjunto[i].len=strlen(conjunto[i].cadena);
 		printf("\n");	
 	}
 
 	//impresion de gramatica
 	for(i=0;i<lon;i++)
 	{
-		printf(" %c -> %s \n",conjunto[i].nombre[0],conjunto[i].termina);
+		printf(" %c -> %s \n",conjunto[i].nombre[0],conjunto[i].cadena);
 	}
 	printf("\n");
 }
@@ -189,7 +189,7 @@ char *getterminal(char name, char meta)
 		//recorre el arreglo struct 
 		for(i=0;i<lon;i++)
 		{
-			if(conjunto[i].nombre[0]==name_terminal && conjunto[i].termina[0]==meta && identificador(conjunto[i].termina[0])==FALSE)
+			if(conjunto[i].nombre[0]==name_terminal && conjunto[i].cadena[0]==meta && identificador(conjunto[i].cadena[0])==FALSE)
 			{
 				//revuelve el valor
 				if(contador==0)
@@ -206,7 +206,7 @@ char *getterminal(char name, char meta)
 					
 				for(k=0;k<conjunto[valor].len;k++)
 				{
-					value[4+k]=conjunto[valor].termina[k];
+					value[4+k]=conjunto[valor].cadena[k];
 				}
 
 				value[conjunto[valor].len+4]= ')' ;
@@ -214,7 +214,7 @@ char *getterminal(char name, char meta)
 				
 				return value;
 			}
-			else if(conjunto[i].nombre[0]==name_terminal && identificador(conjunto[i].termina[0])==TRUE)
+			else if(conjunto[i].nombre[0]==name_terminal && identificador(conjunto[i].cadena[0])==TRUE)
 			{
 				//si coincide pero es mayuscula lo almacena en encontrado
 				if(contador==0)
@@ -222,7 +222,7 @@ char *getterminal(char name, char meta)
 					valor=i;
 				}
 
-				encontrado=conjunto[i].termina[0];
+				encontrado=conjunto[i].cadena[0];
 			}
 
 		}
@@ -322,7 +322,7 @@ datos get_rastreo(char* cadena,char* pila)
 			for(i=0;i<lon;i++)
 			{
 				// si S == S y a== a y a es minuscula
-				if(conjunto[i].nombre[0]==meta && conjunto[i].termina[0]==cadena[0] && identificador(conjunto[i].termina[0])==FALSE)
+				if(conjunto[i].nombre[0]==meta && conjunto[i].cadena[0]==cadena[0] && identificador(conjunto[i].cadena[0])==FALSE)
 				{
 					if(contador==0)
 					{
@@ -339,7 +339,7 @@ datos get_rastreo(char* cadena,char* pila)
 
 					for(k=0;k<conjunto[valor].len;k++)
 					{
-						da.produccion[4+k]=conjunto[valor].termina[k];
+						da.produccion[4+k]=conjunto[valor].cadena[k];
 					}
 
 					da.produccion[conjunto[valor].len+4]= ')' ;
@@ -357,7 +357,7 @@ datos get_rastreo(char* cadena,char* pila)
 					
 					for(j=0;j<conjunto[valor].len;j++)
 					{
-						da.pila[j]=conjunto[valor].termina[j];
+						da.pila[j]=conjunto[valor].cadena[j];
 					}
 
 					for(j=0;j<strlen(pila);j++)
@@ -372,7 +372,7 @@ datos get_rastreo(char* cadena,char* pila)
 
 					return da;
 				}
-				else if(conjunto[i].nombre[0]==meta && identificador(conjunto[i].termina[0])==TRUE)
+				else if(conjunto[i].nombre[0]==meta && identificador(conjunto[i].cadena[0])==TRUE)
 				{
 					//si coincide pero es mayuscula lo almacena en encontrado
 					if(contador==0)
@@ -380,7 +380,7 @@ datos get_rastreo(char* cadena,char* pila)
 						valor=i;
 					}
 
-					encontrado=conjunto[i].termina[0];
+					encontrado=conjunto[i].cadena[0];
 				}
 			}
 
