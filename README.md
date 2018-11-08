@@ -15,7 +15,7 @@ Ejemplo:
 
 Cadena a seguir : abdace#
 
-Hecho para fines academicos.
+> Hecho para fines academicos.
 
 ## Lista de funciones, estructuras y variables utilizadas
 
