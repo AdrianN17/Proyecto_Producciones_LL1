@@ -22,6 +22,13 @@ Hecho para fines academicos.
 ## Explicacion del programa:
 
 ### Variables globales utilizadas
+* MAX 
+* TRUE 
+* FALSE 
+* MAXSTRING 
+* MAXVUELTAS 
+* DEFAULT 
+
 * lon
 * nvueltas
 * noterminales
@@ -51,6 +58,13 @@ Hecho para fines academicos.
 ### Variables globales
 
 ```c
+  #define MAX 20
+  #define TRUE 1
+  #define FALSE 0
+  #define MAXSTRING 20
+  #define MAXVUELTAS 8
+  #define DEFAULT 8
+
   int lon=0;
   int nvueltas=0;
   char *noterminales;
