@@ -19,9 +19,9 @@ Cadena a seguir : abdace#
 
 Hecho para fines academicos.
 
-Explicacion del programa:
+## Explicacion del programa:
 
-## Variables globales utilizadas
+### Variables globales utilizadas
 * lon
 * nvueltas
 * noterminales
@@ -29,11 +29,11 @@ Explicacion del programa:
 * ntlen
 * tle
 
-## Estructuras utilizadas
+### Estructuras utilizadas
 * gramatica
 * datos
 
-## Funciones utilizadas
+### Funciones utilizadas
 
 * identificador
 * busqueda_primero
@@ -45,3 +45,7 @@ Explicacion del programa:
 * rastreo
 * programa
 * restart--sin usar todavia
+
+## Explicacion del codigo
+
+### Variables globales
