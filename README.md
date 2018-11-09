@@ -73,7 +73,7 @@ Ejemplo: abcde
 * conjunto_primero
 * get_datos
 * getterminal
-* get_tabla(void)
+* get_tabla
 * get_rastreo
 * rastreo
 * programa
