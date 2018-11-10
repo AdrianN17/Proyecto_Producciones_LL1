@@ -40,7 +40,7 @@ Ejemplo: SABC
 
 * Lista de terminales para la tabla, un maximo de 20 no terminales, debe colocarse para construir la tabla
 
-Ejemplo: abcde
+Ejemplo: abcde#
 
 * Cadena a rastrear, un maximo de 20 caracteres, debe colocarse con # al final de manera obligatoria
 
