@@ -26,15 +26,16 @@ typedef struct datos{
 
 //funciones utilizadas en el programa
 int identificador(char letra);
+void lectura_datos(void);
+void lectura_gramatica(void);
 void busqueda_primero(void);
 char conjunto_primero(char name, char meta);
-void get_datos(void);
 char *getterminal(char name, char meta);
-void get_tabla(void);datos get_rastreo(char* cadena,char* pila);
+void get_tabla(void);
 datos get_rastreo(char* cadena,char* pila);
 void rastreo(char *str, char* pila);
 void programa(void);
-void restart(void);
+
 //variables globales
 int lon=0;
 int nvueltas=0;
@@ -48,6 +49,7 @@ struct gramatica conjunto[MAX];
 
 
 
+
 //idenficidador de mayusculas y minisculas
 int identificador(char letra)
 {
@@ -58,6 +60,88 @@ int identificador(char letra)
 	else
 	{
 		return FALSE;
+	}
+}
+
+
+void lectura_datos(void)
+{
+	FILE *txtld;
+	int lineas=0;
+	txtld = fopen("Parametros.txt","r");
+
+	if(txtld==NULL)
+	{
+		exit(1);
+	}
+	else
+	{
+		while (feof(txtld) == 0)
+ 	    {
+ 	    	switch(lineas)
+ 	    	{
+ 	    		case 0 : fscanf(txtld,"%d",&lon);
+ 	    		break;
+
+ 	    		case 1 : fscanf(txtld,"%d",&nvueltas);
+ 	    		break;
+
+ 	    		case 2 : fscanf(txtld,"%s",noterminales);
+ 	    		ntlen=strlen(noterminales);
+ 	    		break;
+
+ 	    		case 3 : fscanf(txtld,"%s",terminales);
+ 	    		tlen=strlen(terminales);
+ 	    		break;
+
+ 	    	}
+
+ 	    	lineas++;
+ 	    }   
+
+
+
+ 	    fclose(txtld);
+	}
+
+	
+}
+
+void lectura_gramatica(void)
+{
+	FILE *txtlg;
+	char caracteres[20];
+	int longitudc=0;
+	int lineas=0;
+	txtlg = fopen("Gramatica.txt","r");
+	int i;
+	if(txtlg==NULL)
+	{
+		exit(1);
+	}
+	else
+	{
+		while (feof(txtlg) == 0 & lineas<lon)
+ 	    {
+ 	    	fscanf(txtlg,"%s",caracteres);
+ 	    	longitudc=strlen(caracteres);
+
+ 	    	conjunto[lineas].nombre[0]=caracteres[0];
+
+ 	    	for(i=0;i<longitudc-3;i++)
+ 	    	{
+ 	    		conjunto[lineas].cadena[i]=caracteres[3+i];
+
+ 	    	}
+ 	    	conjunto[lineas].len=longitudc-3;
+
+
+
+
+ 	    	lineas++;
+ 	    }
+
+ 	    fclose(txtlg);
 	}
 }
 
@@ -272,7 +356,7 @@ void get_tabla(void)
 			}
 		}
 
-		printf("\t\n");
+		printf("\t0\n");
 	}
 
 		//para los termonales
@@ -455,65 +539,16 @@ void rastreo(char *str, char* pila)
 void programa(void)
 {
 	char cadena[MAXSTRING];
-	char continuar;
-	char n;
-	char v;
 	noterminales=malloc(MAXSTRING);
 	terminales=malloc(MAXSTRING);
 	char *inicial;
 	inicial=malloc(MAXSTRING);
 
+	lectura_datos();
+	lectura_gramatica();
 
-	printf("Ingrese cantidad de no terminales a utilizar en el programa : ");
-	scanf(" %d", &lon);
+	printf("Datos y gramatica leidos \n");
 
-	if(lon>MAX)
-	{
-		printf("Ha ingresado un numero invalido, se usara por defecto el numero 8\n");
-		lon=DEFAULT;
-	}
-
-	/*if(isdigit(n))
-	{
-		lon=atoi(&n);
-	}
-	else
-	{
-		printf("Ha ingresado un numero invalido, se usara por defecto el numero 8\n");
-		lon=DEFAULT;
-	}*/
-
-	printf("Ingrese cantidad de vueltas a utilizar en el programa : ");
-	scanf(" %d", &nvueltas);
-	if(nvueltas>MAXVUELTAS)
-	{
-		printf("Ha ingresado un numero invalido, se usara por defecto el numero 4\n");
-		nvueltas=DEFAULT2;
-	}
-
-	/*if(isdigit(v))
-	{
-		nvueltas=atoi(&v);
-	}
-	else
-	{
-		printf("Ha ingresado un numero invalido, se usara por defecto el numero 4\n");
-		lon=DEFAULT;
-	}*/
-
-	printf("Ingrese la lista de no terminales para la tabla : ");
-	scanf("%s",noterminales);
-	ntlen=strlen(noterminales);
-
-
-	printf("Ingrese la lista de terminales para la tabla : ");
-	scanf("%s",terminales);
-	tlen=strlen(terminales);
-
-
-	printf("\n");
-	//recoger datos
-	get_datos();
 	//conjunto primero
 	busqueda_primero();
 	//tabla
@@ -531,26 +566,8 @@ void programa(void)
 
 	rastreo(cadena, inicial);
 
-	/*printf("\n Presione Y/N para reiniciar o salir? ");
-	scanf(" %c",continuar);
-
-	if(continuar=='y' || continuar=='Y')
-	{
-		//restart();
-	}*/
+	
 }
-
-/*void restart(void)
-{
-	lon=0;
-	nvueltas=0;
-	memset(noterminales, 0, 255);
-	memset(terminales, 0, 255);
-	memset(conjunto
-	ntlen=0;
-	tlen=0;
-	programa();
-}*/
 
 int main()
 {
