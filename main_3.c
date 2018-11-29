@@ -26,8 +26,8 @@ typedef struct datos{
 
 //funciones utilizadas en el programa
 int identificador(char letra);
-int busqueda_primero(char letra);
-void conjunto_primero(void);
+void busqueda_primero(void);
+char conjunto_primero(char name, char meta);
 void get_datos(void);
 char *getterminal(char name, char meta);
 void get_tabla(void);datos get_rastreo(char* cadena,char* pila);
@@ -63,58 +63,66 @@ int identificador(char letra)
 
 //conjunto primero 
 
-int busqueda_primero(char letra)
-{
-	int contador;
-	int i;
-	char busqueda=letra;
-	char encontrado;
-
-	for(contador=0;contador<nvueltas;contador++)
-	{
-		for(i=0;i<lon;i++)
-		{
-			if(conjunto[i].nombre[0]==busqueda && identificador(conjunto[i].cadena[0])==FALSE)
-			{
-				printf("Primero de %c %c \n",letra,conjunto[i].cadena[0]);
-				return 0;
-			}
-			else if(conjunto[i].nombre[0]==busqueda && identificador(conjunto[i].cadena[0])==TRUE)
-			{
-				encontrado=conjunto[i].cadena[0];
-			}
-
-			
-		}
-
-		busqueda=encontrado;
-	}
-
-}
-
-
-void conjunto_primero(void)
+void busqueda_primero(void)
 {
 	int i;
 	int j;
-	int k;
-	printf("Conjunto primero de cada no terminal\n");
 
-	for(i=0;i<lon;i++)
+	printf("\nConjunto primero\n");
+
+	for(i=0;i<ntlen;i++)
 	{
-		//si S->Ab , A es mayuscula
-		if(identificador(conjunto[i].cadena[0])==TRUE)
+		printf("%c\t", noterminales[i]);
+		for(j=0;j<tlen;j++)
 		{
-			busqueda_primero(conjunto[i].nombre[0]);
+			printf("%c", conjunto_primero(noterminales[i],terminales[j]));
 		}
-		//si A es minuscula
-		else
-		{
-			printf("Primero de %c %c \n",conjunto[i].nombre[0],conjunto[i].cadena[0]);
-		}
+		printf("\n");
 	}
+}
 
-	printf("\n");
+
+char conjunto_primero(char name, char meta)
+{
+	char *value=malloc(MAXSTRING);
+
+	int i;
+	int j;
+	int k;
+	int contador;
+	char encontrado;
+	char name_terminal=name;
+
+	int valor;
+
+
+	//recorre las veces de MAXVUELTAS, 
+	for(contador=0;contador<nvueltas;contador++)
+	{
+		//recorre el arreglo struct 
+		for(i=0;i<lon;i++)
+		{
+			if(conjunto[i].nombre[0]==name_terminal && conjunto[i].cadena[0]==meta && identificador(conjunto[i].cadena[0])==FALSE)
+			{
+				return meta;
+			}
+			else if(conjunto[i].nombre[0]==name_terminal && identificador(conjunto[i].cadena[0])==TRUE)
+			{
+				//si coincide pero es mayuscula lo almacena en encontrado
+				if(contador==0)
+				{
+					valor=i;
+				}
+
+				encontrado=conjunto[i].cadena[0];
+			}
+
+		}
+		//encontrado pasaria a ser la nueva busqueda : S->Ab   ... primero busca S, encontro A, ahora busca como A
+		name_terminal=encontrado;
+	}
+	return '\0';
+	
 }
 
 
@@ -236,8 +244,7 @@ void get_tabla(void)
 {
 	int i;
 	int j;
-	char nt;
-	char t;
+
 
 
 	printf("\nTabla de la funcion accion\n");
@@ -265,7 +272,7 @@ void get_tabla(void)
 			}
 		}
 
-		printf("\t0\n");
+		printf("\t\n");
 	}
 
 		//para los termonales
@@ -508,7 +515,7 @@ void programa(void)
 	//recoger datos
 	get_datos();
 	//conjunto primero
-	conjunto_primero();
+	busqueda_primero();
 	//tabla
 	get_tabla();
 	//cadena
