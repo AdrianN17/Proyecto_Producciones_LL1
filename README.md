@@ -1,6 +1,6 @@
 # Proyecto_Producciones_LL1
 
-> Nota: Usar la misma logica de geterminal para funcion primero, tiene errores, y agregar un lector de files txt para mejorar el uso
+> Nota: editar funcion primero en el readme, arreglado en el codigo
 
 Programa hecho en lenguaje C, puede ingresar un maximo de 20 producciones LL1, devuelve la funcion primero de cada produccion, tabla de funcion accion y ademas el rastreo de una cadena (debe terminar con #)
 
