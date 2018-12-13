@@ -23,7 +23,7 @@ Cadena a seguir : abdace#
 
 Compilar el programa con GCC, compilador c
 
-Dentro del programa le pedira 4 parametros
+Dentro del programa le pedira 4 parametros en el fichero TXT parametros
 
 * Cantidad de no terminales a utilizar en el programa, si se coloca un numero mayor a 20 este asignara por defecto 8
 * Cantidad de vueltas a utilizar en el programa, si se coloca un numero mayor a 8 este se asigrana por defecto 4
@@ -47,6 +47,37 @@ Ejemplo: SABC
 Ejemplo: abcde#
 
 * Cadena a rastrear, un maximo de 20 caracteres, debe colocarse con # al final de manera obligatoria
+
+Luego, se necesita colocar la cantidad de gramaticas en el TXT gramatica, con un maximo definido en el txt parametros:
+
+**Ejemplos : **
+
+```
+txt parametros
+
+8 -- numero de gramaticas
+2 -- numero de vueltas
+SABC -- cadena de no terminales
+abcde -- cadena de terminales
+```
+Recordar que acepta un maximo de 20 caracteres, las cadenas.
+
+```
+txt gramatica
+
+S->aS
+S->BC
+B->bS
+B->dA
+A->a
+A->b
+C->c
+C->e
+```
+
+Son las gramaticas a utilizar, esta ligado al numero de gramaticas, es necesario darle un salto de linea y la flecha **->**.
+
+
 
 ## Lista de funciones, estructuras y variables utilizadas
 
