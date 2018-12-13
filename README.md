@@ -1,7 +1,5 @@
 # Proyecto_Producciones_LL1
 
-> Nota: editar funcion primero en el readme, arreglado en el codigo
-
 Programa hecho en lenguaje C, puede ingresar un maximo de 20 producciones LL1, devuelve la funcion primero de cada produccion, tabla de funcion accion y ademas el rastreo de una cadena (debe terminar con #)
 
 Ejemplo: 
@@ -16,8 +14,6 @@ Ejemplo:
 8. C->e
 
 Cadena a seguir : abdace#
-
-> Hecho para fines academicos.
 
 ### Instrucciones
 
@@ -514,7 +510,7 @@ Si name es minuscula y es igual a meta ( a y a==a) entonces retorna E_C
 
 	Ejemplo: ingreso S->a A->b pero yo busco getterminal(E,a) pero e no existe en mi gramatica, en este caso retorno 0
 
-Si el programa continua hasta este momento ingresa a un iterador de numero de vueltas (nvueltas)
+Si el programa continua hasta este momento ingresa a un bucle de numero de vueltas (nvueltas)
 
 	Luego en otro de i 
 
