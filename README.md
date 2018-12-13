@@ -21,7 +21,7 @@ Cadena a seguir : abdace#
 
 ### Instrucciones
 
-Compilar el programa con GCC
+Compilar el programa con GCC, compilador c
 
 Dentro del programa le pedira 4 parametros
 
@@ -30,9 +30,11 @@ Dentro del programa le pedira 4 parametros
 
 Es necesario colocar la cantidad de vueltas exactas, sino el programa no funcionara de manera optima
 
-Por ejemplo
+Por ejemplo:
 
-S->As  A->b
+**S->As  A->b**
+
+**Aca existen 2 vueltas, S a A, y A a b. Si S derivara a una cadena, entonces S->a seria de una vuelta**
 
 Si coloco 3 vueltas, este hara una vuelta adicional y el resultado puede ser incorrecto, por lo tanto es recomendable colocar el maximo de vueltas que se requiere, en este caso solo 2
 
@@ -65,21 +67,22 @@ Ejemplo: abcde#
 * tle
 
 ### Estructuras utilizadas
+
 * gramatica
 * datos
 
 ### Funciones utilizadas
 
 * identificador
+* lectura_datos
+* lectura_gramatica
 * busqueda_primero
 * conjunto_primero
-* get_datos
 * getterminal
 * get_tabla
 * get_rastreo
 * rastreo
 * programa
-* restart--sin usar todavia
 
 ## Explicacion del codigo :
 
@@ -145,28 +148,27 @@ Produccion : Son las producciones utilizadas en la pila
 
 ### Funciones
 ```c
-  int identificador(char letra);
-  int busqueda_primero(char letra);
-  void conjunto_primero(void);
-  void get_datos(void);
-  char *getterminal(char name, char meta);
-  void get_tabla(void);
-  datos get_rastreo(char* cadena,char* pila);
-  datos get_rastreo(char* cadena,char* pila);
-  void rastreo(char *str, char* pila);
-  void programa(void);
-  void restart(void);
+int identificador(char letra);
+void lectura_datos(void);
+void lectura_gramatica(void);
+void busqueda_primero(void);
+char conjunto_primero(char name, char meta);
+char *getterminal(char name, char meta);
+void get_tabla(void);
+datos get_rastreo(char* cadena,char* pila);
+void rastreo(char *str, char* pila);
+void programa(void);
 ```
 * identificador recibe un parametro caracter y valida si es mayuscula o minuscula
-* busqueda_primero recibe un parametro caracter y valida si tiene un terminal
-* conjunto_primero no recibe un parametro, engloba a varias busqueda_primero
-* get_datos recoge los datos por consola
+* lectura_datos se encarga de leer los datos del fichero txt parametros
+* lectura_gramatica se encarga de leer los datos del fichero txt gramatica
+* busqueda_primero es una función que se encarga de buscar el conjunto primero de cada no terminal, si lo encuentra lo imprime por consola, busco (S) y que vaya a (a)
+* conjunto_primero recibe un parametro y valida si hay un terminal.
 * getterminal recibe como parametro un nombre (S) y una meta a donde yo quiero llegar (a)
 * get_tabla engloba varios getterminal, armando una tabla con los terminales y no terminales pedidos por consola
 * get_rastreo recibe como parametros una cadena y una pila, devuelve una estructura llamada datos
 * rastreo recibe por parametro un string y una pila
 * programa es la funcion principal, que esta dentro del main
-* restar es la funcion para volver a reiniciar el programa
 
 ### Codigo fuente explicacion
 ```c
@@ -178,51 +180,23 @@ Produccion : Son las producciones utilizadas en la pila
 }
 ```
 **Explicacion:** La funcion inicial por defecto, esta va a programa, y al terminar dicha funcion va a un getch (para pausar el programa), si este es presionado se sale del programa
-
+##
 ```c
   void programa(void)
 {
 	char cadena[MAXSTRING];
-	char continuar;
-	char n;
-	char v;
 	noterminales=malloc(MAXSTRING);
 	terminales=malloc(MAXSTRING);
 	char *inicial;
 	inicial=malloc(MAXSTRING);
 
+	lectura_datos();
+	lectura_gramatica();
 
-	printf("Ingrese cantidad de no terminales a utilizar en el programa : ");
-	scanf(" %d", &lon);
+	printf("Datos y gramatica leidos \n");
 
-	if(lon>MAX)
-	{
-		printf("Ha ingresado un numero invalido, se usara por defecto el numero 8\n");
-		lon=DEFAULT;
-	}
-
-	printf("Ingrese cantidad de vueltas a utilizar en el programa : ");
-	scanf(" %d", &nvueltas);
-	if(nvueltas>MAXVUELTAS)
-	{
-		printf("Ha ingresado un numero invalido, se usara por defecto el numero 4\n");
-		nvueltas=DEFAULT2;
-	}
-	printf("Ingrese la lista de no terminales para la tabla : ");
-	scanf("%s",noterminales);
-	ntlen=strlen(noterminales);
-
-
-	printf("Ingrese la lista de terminales para la tabla : ");
-	scanf("%s",terminales);
-	tlen=strlen(terminales);
-
-
-	printf("\n");
-	//recoger datos
-	get_datos();
 	//conjunto primero
-	conjunto_primero();
+	busqueda_primero();
 	//tabla
 	get_tabla();
 	//cadena
@@ -240,42 +214,10 @@ Produccion : Son las producciones utilizadas en la pila
 }
 ```
 
-**Explicacion:** La funcion inicializa las variables y pide la cantidad para lon, nvueltas, ademas de la cantidad de terminales y caracteres para usar en la creacion de la tabla
+**Explicacion:** La funcion inicializa las variables y realiza una lectura de los ficheros, ademas de que luego pide al usuario ingresar una cadena para realizar un rastreo respectivo.
 Luego va a las demas funciones para realizar el seguimiento respectivo
 
-```c
-void get_datos(void)
-{
-	int i; 
-
-	for(i=0;i<lon;i++)
-	{
-		//coger nombre
-		printf("Ingrese no terminal %i : ",i+1);
-		scanf(" %c", &conjunto[i].nombre);
-		conjunto[i].nombre[0]=toupper(conjunto[i].nombre[0]);
-
-		//coger cadena
-		printf("Ingrese cadena %i : ",i+1);
-		scanf("%s",conjunto[i].cadena);
-
-		//coger tamaño
-		conjunto[i].len=strlen(conjunto[i].cadena);
-		printf("\n");	
-	}
-
-	//impresion de gramatica
-	for(i=0;i<lon;i++)
-	{
-		printf(" %c -> %s \n",conjunto[i].nombre[0],conjunto[i].cadena);
-	}
-	printf("\n");
-}
-
-```
-
-**Explicacion:** La funcion hace un iterador para llenar los datos en el array gramatica, con lon veces, para posteriormente imprimirlo por consola
-
+##
 ```c
 int identificador(char letra)
 {
@@ -291,80 +233,91 @@ int identificador(char letra)
 ```
 **Explicacion:** Se encarga de analizar si un caracter es mayuscula o minuscula
 
+##
 ```c
-int busqueda_primero(char letra)
-{
-	int contador;
-	int i;
-	char busqueda=letra;
-	char encontrado;
-
-	for(contador=0;contador<nvueltas;contador++)
-	{
-		for(i=0;i<lon;i++)
-		{
-			if(conjunto[i].nombre[0]==busqueda && identificador(conjunto[i].cadena[0])==FALSE)
-			{
-				printf("Primero de %c %c \n",letra,conjunto[i].cadena[0]);
-				return 0;
-			}
-			else if(conjunto[i].nombre[0]==busqueda && identificador(conjunto[i].cadena[0])==TRUE)
-			{
-				encontrado=conjunto[i].cadena[0];
-			}
-
-			
-		}
-
-		busqueda=encontrado;
-	}
-
-}
-```
-
-**Explicacion:** La funcion inicializa las variables, busqueda es el caracter actualmente buscado por el programa, encontrado es un posible candidato que debe esperar hasta el final del bucle de i, si cumple las codicionales:
-
-	Si el nombre (S) == busqueda(S) y a es minuscula entonces imprime por consola
-
-	Si el nombre (S) == busqueda(S) y A es mayuscula entonces almacena el A en encontrado, A pasaria a ser la busqueda, en vez de S
-
-Lo hace la cantidad de n vueltas
-
-```c
-void conjunto_primero(void)
+void busqueda_primero(void)
 {
 	int i;
 	int j;
-	int k;
-	printf("Conjunto primero de cada no terminal\n");
 
-	for(i=0;i<lon;i++)
+	printf("\nConjunto primero\n");
+
+	for(i=0;i<ntlen;i++)
 	{
-		//si S->Ab , A es mayuscula
-		if(identificador(conjunto[i].cadena[0])==TRUE)
+		printf("%c\t", noterminales[i]);
+		for(j=0;j<tlen;j++)
 		{
-			busqueda_primero(conjunto[i].nombre[0]);
+			printf("%c", conjunto_primero(noterminales[i],terminales[j]));
 		}
-		//si A es minuscula
-		else
-		{
-			printf("Primero de %c %c \n",conjunto[i].nombre[0],conjunto[i].cadena[0]);
-		}
+		printf("\n");
 	}
-
-	printf("\n");
 }
 ```
-**Explicacion:** Engloba varios conjuntos primero en un ciclo for de i, si cumple las condicionales:
-Si A es mayuscula entonces va a la funcion busqueda_primero con el parametro nombre, sino imprine el valor por consola
+
+**Explicacion:** La función inicializa las variables, realiza un for por todos los no terminales, dentro de este realiza otro ciclo repetitivo para los terminales, y por cada uno envía los datos a la función, conjunto_primero, con los parámetros no terminales y terminales
+
+##
+
+```c
+char conjunto_primero(char name, char meta)
+{
+	char *value=malloc(MAXSTRING);
+
+	int i;
+	int j;
+	int k;
+	int contador;
+	char encontrado;
+	char name_terminal=name;
+
+	int valor;
+
+
+	//recorre las veces de MAXVUELTAS, 
+	for(contador=0;contador<nvueltas;contador++)
+	{
+		//recorre el arreglo struct 
+		for(i=0;i<lon;i++)
+		{
+			if(conjunto[i].nombre[0]==name_terminal && conjunto[i].cadena[0]==meta && identificador(conjunto[i].cadena[0])==FALSE)
+			{
+				return meta;
+			}
+			else if(conjunto[i].nombre[0]==name_terminal && identificador(conjunto[i].cadena[0])==TRUE)
+			{
+				//si coincide pero es mayuscula lo almacena en encontrado
+				if(contador==0)
+				{
+					valor=i;
+				}
+
+				encontrado=conjunto[i].cadena[0];
+			}
+
+		}
+		//encontrado pasaria a ser la nueva busqueda : S->Ab   ... primero busca S, encontro A, ahora busca como A
+		name_terminal=encontrado;
+	}
+	return '\0';
+	
+}
+```
+**Explicacion:**  Recibe un parametro name y otro meta, uno es lo que tengo y el otro a donde quiero llegar.
+Realiza un recorrido en el arreglo struct, las veces de vueltas que definimos en el txt parametros (contador); luego, se realiza la siguientes condicionales
+
+Ejemplo:
+
+Si S==S y a==a y a es minuscula, entonces devuelve el valor
+Si S==S y A es mayúscula entonces guarda el i, y almacena el A, reemplazándolo en name, A pasa a ser la nueva búsqueda.
+
+##
 
 ```c
 void get_tabla(void)
 {
 	int i;
 	int j;
-	char nt;
-	char t;
+
 
 
 	printf("\nTabla de la funcion accion\n");
@@ -429,6 +382,8 @@ void get_tabla(void)
 ```
 
 **Explicacion:** Genera una tabla mediante iteradores, llamando multiples veces a la funcion getterminal y dando como parametros el caracter de la fila y columna
+
+##
 
 ```c
 char *getterminal(char name, char meta)
